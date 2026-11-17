@@ -1,0 +1,247 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>漢文 句法暗記</title>
+<style>
+:root{--bg:#f3f6f8;--card:#fff;--ink:#14263d;--sub:#5b6b7d;--line:#d5dde5;--ac:#1f4e8c;--ok:#1d7a5a;--ng:#b3412f;--hl:#e4edf7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171f;--card:#19232e;--ink:#e6edf5;--sub:#93a3b5;--line:#2c3947;--ac:#7fb0ee;--ok:#5cc79d;--ng:#ee8a77;--hl:#22364d}}
+:root[data-theme="dark"]{--bg:#10171f;--card:#19232e;--ink:#e6edf5;--sub:#93a3b5;--line:#2c3947;--ac:#7fb0ee;--ok:#5cc79d;--ng:#ee8a77;--hl:#22364d}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif}
+main{max-width:640px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:4px 0 10px;letter-spacing:.08em}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+button,select{font:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+button.on{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+button:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin:10px 0}
+.big{font-size:26px;line-height:1.5;margin:6px 0;word-break:break-all}
+.tag{font-size:12px;color:var(--sub)}
+.sub{color:var(--sub);font-size:14px}
+.k{color:var(--ac);font-weight:700}
+.ex{background:var(--hl);border-radius:8px;padding:8px 12px;margin-top:10px}
+.act{display:flex;gap:8px;margin-top:12px}.act button{flex:1;padding:10px}
+.ok{color:var(--ok)}.ng{color:var(--ng)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px}
+.opt.right{border-color:var(--ok);background:var(--hl)}.opt.wrong{border-color:var(--ng)}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0}
+summary{cursor:pointer}
+.judge{display:flex;align-items:center;gap:6px;margin:6px 0;flex-wrap:wrap}.judge b{min-width:4.5em;font-weight:400}.stat{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;margin:4px 0}textarea{width:100%;height:120px;font:12px/1.4 monospace;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px}.badge{font-size:12px;color:var(--sub);margin-right:6px}.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+</style></head><body><main>
+<h1>漢文 句法暗記</h1>
+<div class="row" id="tabs"></div>
+<div class="row" id="cats"></div>
+<div id="app"></div>
+</main>
+<script>
+const RAW=`否|不(基本)|不〜|〜せず|〜しない|秦王怒不許|秦王怒りて許さず|秦王は怒って許さなかった。|不は助動詞「ず」。直前は未然形
+否|非(基本)|非〜|〜に非ず|〜ではない|彼非敵也|彼は敵に非ざるなり|彼は敵ではない。|「にあらず」直前は体言・連体形
+否|無・莫(なし)|無／莫 〜|〜無し|〜がない|吾無罪|吾罪無し|私には罪がない。|莫は「誰も〜ない」の意が多い
+否|無(動詞を伴う)|無 〜スルコト|〜すること無し|〜することがない|富而無驕|富みて驕ること無し|裕福でもおごり高ぶることがない。|
+否|未|未ダ〜(セ)ず|未だ〜せず|まだ〜しない|||
+否|不能|不能〜|〜する能はず|〜することができない(能力がない)|因病、歳余不能起|病に因り、歳余起くる能はず|病気により、一年あまり起きることができない。|「能」は不能・弗能のときだけ「能はず」と読む
+否|不可(不可能)|不可〜|〜すべからず|〜してはいけない／〜できない|君之使不可殺之|君の使ひは之を殺すべからず|主君の使者はこれを殺すことができない。|道義的に許されずできない
+否|不得|不得〜|〜を得ず|〜することができない(機会・状況が許さない)|有兵守関、不得入|兵の関を守る有り、入るを得ず|関所を守る兵士がいて、入ることができない。|
+否|不足|不足〜|〜するに足らず|〜するのに十分でない／〜する価値がない|不足任天下|天下を任するに足らず|天下を任せることができない。|
+否|不可勝／無以|不可勝〜／無以〜|勝げて〜すべからず／以て〜する無し|数が多すぎて〜しきれない／〜する手段がない|||
+否|勿(禁止)|勿〜|〜する勿かれ|〜してはいけない|過則勿憚改|過てば則ち改むるに憚る勿かれ|失敗したら改めるのにためらってはいけない。|無・莫・勿・毋・亡すべて禁止になりうる
+否|莫(禁止)|莫〜|〜する莫かれ|〜しないでくれ|君莫笑|君笑ふこと莫かれ|あなたは笑わないでくれ。|禁止は「君」「汝」など二人称を伴うことが多い
+否|不可(禁止)|不可〜|〜すべからず|〜してはいけない|時不可失|時は、失ふべからず|時(時機)は、失ってはいけない。|不可には禁止と不可能の両方がある
+否|不復|不復〜|復た〜せず|もう〜しない／二度と〜しない|終身不復飲酒|身を終ふるまで復た酒を飲まず|死ぬまで二度と酒を飲まなかった。|再現の否定
+否|無復|無復〜|復た〜無し|もう〜はない／もう〜するな|境内無復盗賊|境内に復た盗賊無し|領地内にもう盗賊はいなくなった。|禁止にもなる
+否|不敢|不敢〜|敢へて〜せず|〜しようとしない／〜する勇気がない|秦不敢動|秦は敢へて動かず|秦は動こうとしなかった。|「敢」は「動」にかかる
+否|無敢|無敢〜|敢へて〜する無し|〜しようとするものがいない|大臣畏禍、無敢言|大臣禍ひを畏れ、敢へて言ふ無し|大臣たちは災いを恐れて、諫言しようとするものはいなかった。|会話文では禁止(〜してはならない)にもなる
+否|不肯|不肯〜|〜するを肯ぜず|〜しようとしない|叔斉亦不肯立而逃之|叔斉も亦立つことを肯ぜずして之を逃る|叔斉もまた即位しようとしないで、国を逃れた。|心で望まない。「不敢」とは意味が異なる
+否|不常(部分否定)|不常〜|常には〜せず|いつも〜するわけではない|家貧、不常得油|家貧しくして、常には油を得ず|家が貧しく、いつも油を得られるとは限らない。|常不＝全部否定(常に〜ず)
+否|不必(部分否定)|不必〜|必ずしも〜せず|必ずしも〜とは限らない|勇者不必有仁|勇者は必ずしも仁有らず|勇者は必ずしも仁徳があるとは限らない。|必不＝全部否定(必ず〜ず)
+否|不倶(部分否定)|不倶〜|倶には〜せず|ともには〜しない(両方は〜ない)|両雄不倶立|両雄は倶には立たず|両雄はともには立たない。|倶不＝全部否定
+否|未必|未必〜|未だ必ずしも〜せず|必ずしも〜するとは限らない|書不必多看|書は必ずしも多く看ず|書物はたくさん読む必要はない。|「不必」は「〜する必要はない」の意もある
+否|不再・不両・不尽・不甚|不再〜／不両〜／不尽〜／不甚〜|再びは〜せず／両つながらは〜せず／尽くは〜せず／甚だしくは〜せず|二度と〜しない／両方とも〜するわけではない／すべて〜するわけではない／徹底的に〜するわけではない|||
+否|無不(二重否定)|無不〜|〜せざるは無し|〜しないものはない(＝みな〜する)|四坐驚散、無不狼狽|四坐驚散し、狼狽せざるは無し|周囲の者は驚いて逃げ出し、うろたえないものはなかった。|強い肯定
+否|無非(二重否定)|無非〜|〜に非ざるは無し|〜でないものはない(＝すべて〜である)|天之所覆、無非朕臣|天の覆ふ所、朕が臣に非ざるは無し|天が覆うところで、私の臣下でないものはない。|強い肯定
+否|非不(二重否定)|非不〜|〜せざるに非ず|〜しないのではない(別の理由がある)|非不説子之道、力不足也|子の道を説ばざるに非ず、力足らざるなり|先生の道を喜ばないのではない、力が足りないのである。|弁明・釈明
+否|非無(二重否定)|非無〜|〜無きに非ず|〜がないのではない|国亡者、非無賢人、不能用也|国の亡ぶるは、賢人無きに非ず、用ゐる能はざればなり|国が滅びるのは、賢人がいないのではなく、用いることができないからである。|弁明・釈明
+否|不能不|不能不〜|〜せざること能はず|〜せずにはいられない|魏王日聞其毀、不能不信|魏王日に其の毀りを聞き、信ぜざること能はず|魏王は毎日その悪口を聞いて、信じずにはいられなくなった。|
+否|不可不|不可不〜|〜せざるべからず|〜しないわけにはいかない／〜しなければならない|秦彊而趙弱、不可不許|秦は彊くして趙は弱し、許さざるべからず|秦は強く趙は弱い、(秦の要求を)認めないわけにはいかない。|
+否|不得不|不得不〜|〜せざるを得ず|〜しないわけにはいかない|有功者不得不賞|功有る者は賞せざるを得ず|功績のあるものは賞を与えないわけにはいかない。|
+否|無A不B|無A不B|AとしてBせざるは無し|AでBしないものはない／AはみなBする|無書不読|書として読まざるは無し|書物で読まないものはない。|条件と結果なら「民無信不立」＝民は信無くんば立たず
+否|未嘗不／不敢不／未必不|未嘗不〜／不敢不〜／未必不〜|未だ嘗て〜せずんばあらず／敢へて〜せずんばあらず／未だ必ずしも〜せずんばあらず|これまで〜しなかったことはない／〜しないわけにはいかない／必ずしも〜しないとは限らない|||未嘗不は強い肯定、不敢不・未必不は消極的な肯定
+使|使・令・遣・教・俾|A使B C|AをしてCせしむ(AはBにCさせる)|AがBにCさせる|王使人学之|王人をして之を学ばしむ|王が人にこれを学ばせる。|使役の助字のすぐ下に使役対象(B)
+使|令|A令B C|AをしてCせしむ|AがBにCさせる|我令人求之|我人をして之を求めしむ|私は人にこれを求めさせる。|
+使|遣|A遣B C|Bを遣はしてCせしむ|AがBを派遣してCさせる|呉遣将救之|呉将を遣はして之を救はしむ|呉は将軍を派遣してこれを救援させる。|「遣」は派遣するの意味を残す
+使|教|A教B C|AをしてCせしむ／BにCを教ふ|AがBにCさせる|母教之読書|母之をして書を読ましむ|母はこれに書物を読ませる。|訓読では「しむ」の前は未然形。サ変以外に「せ」を入れない
+使|命|A命B C|Bに命じてCせしむ|AがBに命令してCさせる|成王命周公誅之|成王周公に命じて之を誅せしむ|成王は周公に命令してこれを殺させた。|結果として使役で読む
+使|勧・召・説・誡・呼|A勧B C|Bに勧めてCせしむ|勧めて／呼び出して／説得して／戒めて／呼んで〜させる|権勧蒙読書|権蒙に勧めて書を読ましむ|孫権が呂蒙に勧めて書物を読ませた。|命・勧・召・説・誡・呼は動詞として読み使役の意を補う
+使|召|召B C|Bを召してCせしむ|召し出してCさせる|帝召諸将議兵事|帝諸将を召して兵事を議せしむ|皇帝は諸将を呼び出して軍事をはからせた。|
+使|自動詞の使役|泣B|Bを泣かしむ|Bを泣かせる(自動詞が目的語をとる)|泣孤舟之嫠婦|孤舟の嫠婦を泣かしむ|(笛の音が悲しいため)一艘の舟に乗る未亡人を泣かせる。|「泣」が使役の意味をもつ
+使|名詞の使役|傅B|Bに傅たらしむ|Bの補佐役にさせる(名詞が目的語をとる)|傅王子也|王子に傅たらしむるなり|王子の補佐役とさせたのだ。|名詞「傅」が使役の意味をもつ
+使|形容詞の使役|富B／強B|Bを富ましむ／Bを強くす|Bを豊かに・強大にする|富国、強兵|国を富まし、兵を強くす|国を豊かにし、軍事力を強大にする。|
+使|複数の使役|使A〜、〜、〜|Aをして〜、〜、〜しめよ|複数の動作をさせる|使斉軍入魏地、為十万竈、明日為五万竈、又明日為三万竈|斉軍をして魏地に入り、十万の竈を為り、明日には五万の竈を為り、又明日には三万の竈を為らしめよ|斉軍に魏の地に入らせ、十万の竈を作らせ、翌日は五万、翌々日は三万の竈を作らせなさい。|最後に読む動作にだけ「しむ」を付ける
+使|使役の省略(A)|使B C|人をして〜せしむ(Aの省略)|(Aは)人にCさせた|使人追宋義子|人をして宋義の子を追はしむ|(項羽は)人に宋義の子を追跡させた。|Aは主語が省略される
+使|使役の省略(B)|A令C|之を試みしむ(Bの省略)|(臣下に)Cさせた|帝令試之|帝之を試みしむ|皇帝が(臣下に)これを試させた。|Bは使役対象が省略される
+受|見(る・らる)|A見B|Bらる|AがBされる|盆成括見殺|盆成括殺さる|盆成括が殺された。|見・被・為・所＝「る・らる」。直前の語は未然形
+受|見B於C|A見B於C|CにBせらる|AがCにBされる|晏子見疑於斉君|晏子斉君に疑はる|晏子は斉君に疑われた。|
+受|於(置き字)|A B於C|CにBせらる|AがCにBされる|王欺於張儀|王張儀に欺かる|王は張儀にだまされた。|於・于・乎が受身の手がかり
+受|為A所B|A為B所C|BのCする所と為る|AがBにCされる|曹仁為関羽所囲|曹仁関羽の囲む所と為る|曹仁は関羽に包囲された。|「為」は「所」の動詞までかかる
+受|為A所B(別例)|A為B所C|BのCする所と為る|AがBにCされる|周処為郷里所患|周処郷里の患ふる所と為る|周処は村里の人々の悩みぐさになった。|受身に訳すと不自然なら「BがCする対象になる」
+受|官位の任免|謫・封・免・叙・除・任・拝(せらる)|〜せらる|左遷される／封建される／罷免される／任命される|吾昔謫黄州|吾昔黄州に謫せらる|私は昔黄州に左遷された。|官位の語は受身で読む
+受|文脈から判断|A 放/遊…|〜(せ)らる|文脈で受身と判断する|屈原既放、遊於江潭|屈原既に放たれ、江潭に遊ぶ|屈原は追放されてから、川のほとりをさまよった。|主語が受身の対象かを見る
+練|練習(1)|使|管仲をして国を治めしむ|斉の桓公が管仲に国を治めさせる|斉桓公使管仲治国|斉の桓公管仲をして国を治めしむ|斉の桓公は管仲に国を治めさせた。|
+練|練習(2)|令|使者をして救ひを秦に求めしむ|韓が使者に秦へ救援を求めさせる|韓令使者求救於秦|韓使者をして救ひを秦に求めしむ|韓は使者に救援を秦に求めさせた。|
+練|練習(3)|命|虢公に命じて樊皮を討たしむ|王が虢公に命じて樊皮を討たせる|王命虢公討樊皮|王虢公に命じて樊皮を討たしむ|王は虢公に命じて樊皮を討伐させた。|
+練|練習(4)|説|楚王に説きて中山を伐たしむ|楚王に説いて中山を攻めさせる|説楚王伐中山|楚王に説きて中山を伐たしむ|楚王を説得して中山を攻めさせた。|
+疑|何(原因・理由)|何〜スル|何ぞ〜する|どうして〜するのか|夫子何恥之|夫子何ぞ之を恥づるや|先生はどうしてこれを恥じるのですか。|奚・胡・曷も同じ。文末は「や・か」を補う
+疑|安(原因・理由)|安〜スル|安くんぞ〜する|どうして〜するのか|仲父安識之|仲父安くんぞ之を識る|仲父はどうしてこれを知ったのか。|焉・悪・寧・烏も同じ
+疑|何為|何為〜|何為れぞ〜する|どうして〜するのか|君何為哭|君何為れぞ哭する|あなたはどうして大声をあげて泣くのか。|
+疑|何以|何以〜|何を以て〜する|どうして／どのようにして〜するのか|何以卑我|何を以て我を卑しむ|どうして私を見下すのか。|手段・方法を問う用法もある
+疑|何(対象)|何〜スル|何をか〜する|何を〜するのか|子何夢|子何をか夢みる|あなたは何を夢見たのか。|目的語が疑問詞だと述語の前に倒置
+疑|誰|誰〜スル|誰か〜する|誰が〜するのか|誰殺不辜|誰か不辜を殺す|誰が罪のない人を殺すのか。|「たれ」と濁らない
+疑|孰|孰〜スル|孰れか〜する|どちらが〜するのか|趙衰趙盾、孰賢|趙衰趙盾、孰れか賢なる|趙衰と趙盾では、どちらが賢いのか。|選択を問う
+疑|何時|何時〜|何れの時にか〜する|いつ〜するのか|趙何時亡|趙は何れの時にか亡ぶ|趙の国はいつ滅びるのか。|何日・何年も
+疑|安(場所)|安〜スル|安くにか〜する|どこに〜するのか|蛇今安在|蛇今安くにか在る|蛇は今どこにいるのか。|何・焉・悪も
+疑|何処|何処〜|何れの処にか〜する|どこに〜するのか|桃李何処開|桃李何れの処にか開く|桃李の花はどこに咲いているのか。|
+疑|〜乎(文末の助字)|〜乎|〜するか／〜するや|〜するのか|漢皆已得楚乎|漢皆已に楚を得たるか|漢軍はみなすでに楚を占領したのか。|哉・邪・也・耶・与・歟も。名詞+か／連体形+か／終止形+や／疑問詞…連体形+や
+疑|有諸|有諸|諸有りや|これは事実か|武王伐紂、有諸|武王紂を伐つ、諸有りや|武王が紂王を討った、これは事実か。|諸＝之乎の縮約
+疑|何如|〜何如|〜は何如|〜はどのようであるか|城中何如|城中は何如|城の中はどのようであるか。|何如＝いかん。状態・評価を問う
+疑|如何|如何|〜は如何せん|どうすればよいか|為之如何|之を為すこと如何せん|これをするにはどうすればよいか。|如＝いかんセン。手段・方法。目的語は如と何の間
+疑|何也|〜何也|〜は何ぞや|〜とはどうしてか|子貌有喜色、何也|子の貌に喜色有るは、何ぞや|あなたの表情に喜びの色があるのは、どうしてか。|也＝や
+疑|誰也|〜誰也|〜は誰ぞや|〜は誰か|当今好学者、誰也|当今学を好む者は、誰ぞや|現在学問を好む者は、誰か。|
+疑|何謂也|〜何謂也|〜は何の謂ひぞや|どういう意味か|此言、何謂也|此の言は、何の謂ひぞや|この言葉は、どういう意味か。|何故也＝何の故ぞや(どうしてか)
+疑|幾何|幾何|幾何ぞ|どれくらい(数量)|年幾何|年幾何ぞ|年齢はどれくらいか。|幾許も同じ
+疑|不(文末の否定語)|〜不|〜や不や|〜するか、どうか|汝知不|汝知るや不や|あなたは知っているか、どうか。|不＝否「いなや」。訓読は漢字のまま書き下す
+疑|未(文末の否定語)|〜未|〜や未だしや|〜したか、まだか|寒梅著花未|寒梅花を著けたりや未だしや|寒梅は花をつけたか、まだか。|
+疑|何A之B也|何A之B也|何ぞAのBするや|どうしてAがBするのか|何夫子之娯也|何ぞ夫子の娯しむや|どうして先生はこのように楽しんでおられるのか。|反語・詠嘆にも使う(何楚人之多＝何ぞ楚人の多きや)
+疑|誰が〜(修飾)|誰A|誰が〜の|誰の〜|汝誰家奴|汝は誰が家の奴なる|お前は誰の家の召使いか。|何(なんノ)・誰(たがノ)など修飾の形
+疑|何為者|何為者|何為る者ぞ|何者か|客何為者|客は何為る者ぞ|客人は何者か。|
+反|何〜乎(反語)|何〜乎|何ぞ〜せんや|どうして〜するだろうか(いや、〜しない)|水制火、王何疑乎|水の火を制する、王何ぞ疑はんや|水が火を制することは、王様、どうしてお疑いになるでしょうか。|疑問と反語は形が同じ。文脈で判断。反語は未然形+んや。否定語を外すと主張が見える
+反|豈〜哉|豈〜哉|豈に〜せんや|どうして〜するだろうか(いや、〜しない)|豈愛桃哉|豈に桃を愛しまんや|どうして桃を惜しむだろうか(いや、惜しまない)。|哉・乎・邪・也・耶・与・歟。推測(〜だろうか)・詠嘆もある
+反|安〜哉|安〜哉|安くんぞ〜せんや|どうして〜するだろうか|安知江海之深乎|安くんぞ江海の深きを知らんや|どうして大河と海の深さがわかるだろうか(いや、わからない)。|焉・悪・寧・烏も同じ
+反|何敢|何敢〜|何ぞ敢へて〜せんや|どうして〜しようとするだろうか|父子恩、何敢忘|父子の恩は、何ぞ敢へて忘れんや|親子の恩義は、どうして忘れようとするだろうか。|不敢と同趣旨
+反|何必|何必〜|何ぞ必ずしも〜せんや|どうして〜する必要があるだろうか|何必思故郷|何ぞ必ずしも故郷を思はんや|どうして故郷を思う必要があるだろうか(いや、ない)。|不必と同趣旨
+反|何能・何得・何可|何能〜／何得〜／何可〜|何ぞ能く〜せんや／何ぞ〜するを得んや／何ぞ〜すべけんや|どうして〜できるだろうか|||不能・不得・不可と同趣旨
+反|可〜乎|可〜乎|〜すべけんや|〜できるだろうか(いや、できない)|君命可避乎|君命は避くべけんや|君主の命令は避けることができるだろうか。|「べからんや」とは読まず「べけんや」
+反|得〜乎|得〜乎|〜するを得んや|〜できるだろうか(いや、できない)|得為孝乎|孝を為すを得んや|孝を行うことができるだろうか。|
+反|能〜乎|能〜乎|能く〜せんや|〜できるだろうか(いや、できない)|能免於患乎|能く患を免れんや|災いから逃れることができるだろうか。|
+反|能無〜乎|能無〜乎|能く〜無からんや|〜がなくていられるだろうか|能無怨乎|能く怨み無からんや|不満に思うことがなくていられるだろうか(いや、思わないではいられない)。|得無〜乎＝〜する無きを得んや
+反|敢不〜|敢不〜|敢へて〜せざらんや|どうして〜しようとしないだろうか|臣敢不尽力|臣敢へて力を尽くさざらんや|私はどうして力を尽くそうとしないことがあるでしょうか。|不を伴わない「敢」も反語。豈敢不・安敢不も
+反|独〜乎|独〜乎|独り〜せんや|どうして〜するだろうか|相如雖駑、独畏廉将軍哉|相如駑なりと雖も、独り廉将軍を畏れんや|私は愚かだが、どうして廉将軍を恐れるだろうか。|独には限定「〜ではあるが」の用法も。混同注意
+反|何〜之有|何〜之有|何の〜か之れ有らん|どんな〜があるだろうか(いや、ない)|老夫何力之有焉|老夫何の力か之れ有らん|老人にどんな力があるだろうか(いや、力などありはしない)。|何有力を倒置して強調した形
+反|盍・蓋・何不|盍〜／蓋〜／何不〜|盍ぞ〜せざる|どうして〜しないのか(〜してはどうか)|||再読文字。「〜すべきだ」の意も
+反|非A乎(確認)|A非B乎|AはBに非ずや|AはBではないか(Bだろう)|若非吾故人乎|若は吾が故人に非ずや|あなたは私の旧友ではないか(旧友だろう)。|確認の反語。「〜に非ざらんや」とは読まない
+反|不B乎(確認)|A不B乎|AはBせずや|AはBしないか(Bするだろう)|汝不知夫蟷螂乎|汝夫の蟷螂を知らずや|あなたはあのカマキリを知らないか(知っているでしょう)。|確認の反語
+反|豈〜哉(推測)|豈〜哉|豈に〜か|〜だろうか|丞相豈忘之哉|丞相豈に之を忘れんか|宰相はこれを忘れたのだろうか。|推測。豈有〜哉＝何か〜があるのではないか
+反|其〜乎(推測)|其〜乎|其れ〜か|〜だろうか|知我者、其天乎|我を知る者は、其れ天か|私を理解するものは、天だろうか。|其は指示語ではなく推測。「それ」とは訳さない
+反|無乃〜乎|無乃〜乎|乃ち〜無からんや|おそらく〜ではないだろうか|無乃有故乎|乃ち故有る無からんや|おそらく理由があるのではないだろうか。|無乃ろ故有らんか、とも
+反|得非〜乎|得非〜乎|〜するに非ざるを得んや|〜するのではないか|得非盗来而欺我乎|盗み来たりて我を欺くに非ざるを得んや|盗んできて私をだましているのではないか。|
+詠|嗚呼|嗚呼、〜|嗚呼、〜|ああ、〜|嗚呼、天将棄予|嗚呼、天将に予を棄てんとす|ああ、天が私を見捨てようとしている。|嗟乎・噫・於戯・於乎・吁など。擬声語なので文中の意味で読み分けない
+詠|〜哉|〜哉|〜かな|〜だなあ|悲哉|悲しいかな|悲しいなあ。|矣・夫・乎・也・与も「かな」。形容詞はイ音便(悲しいかな)
+詠|嗚呼〜哉|嗚呼、〜哉|嗚呼、〜かな|ああ、〜だなあ|嗚呼、哀哉|嗚呼、哀しいかな|ああ、悲しいなあ。|感動詞と文末助字を併用
+詠|何其〜也|何其〜也|何ぞ其れ〜なるや|なんと〜であることよ|足下言、何其謬也|足下の言、何ぞ其れ謬れるや|あなたの言葉は、なんと誤っていることよ。|其は詠嘆・強調の語気で「それ」とは訳さない
+詠|何〜也|何〜也|何ぞ〜なるや|なんと〜であることよ|王将軍老矣、何怯也|王将軍老いたるかな、何ぞ怯なるや|王将軍は老いたなあ、なんと臆病なことよ。|疑問・反語・詠嘆のどれもある。形容詞を述語にとる形が主に詠嘆
+詠|豈不〜哉|豈不〜哉|豈に〜ならずや|なんと〜ではないか|世皆争為之、豈不悲哉|世皆争ひて之を為す、豈に悲しからずや|世の人がみな争ってこんなことをするのは、なんと悲しいではないか。|豈不+形容詞+哉＝詠嘆、豈不+動詞+哉＝反語(どうして〜しないだろうか)が多い
+詠|不亦〜乎|不亦〜乎|亦〜ならずや|なんと〜ではないか|有朋自遠方来、不亦楽乎|朋有り遠方より来たる、亦楽しからずや|遠くから来る友人がいる、なんと楽しいではないか。|「亦」は詠嘆を強め「また」と訳さない。豈不亦〜乎の形もある
+詠|已矣・宜乎|已矣／宜乎|已んぬるかな／宜なるかな|これまでだなあ／当然だなあ|||「もうどうしようもない・これまでだ」の詠嘆。已矣乎・已矣夫も
+再|未|未〜|未だ〜ず|まだ〜しない|未嘗敗北|未だ嘗て敗北せず|まだこれまでに敗北したことがない。|未実現・未完了。再読文字はまず右側の仮名で読み、次に返り点に従って左側の仮名で読む
+再|応・当|当〜|当に〜べし|(当然)〜べきだ／きっと〜だろう|人当知足|人当に足るを知るべし|人は当然満足することを知るべきだ。|当然と推量の二義。文脈で判断
+再|将・且|将〜|将に〜んとす|(今にも)〜しようとする／〜するつもりだ|将入門|将に門に入らんとす|今にも門に入ろうとする。|将来の意志・事態。後半は未然形＋ん(む)とす
+再|宜|宜〜|宜しく〜べし|〜するのがよい|君宜還|君宜しく還るべし|あなたは帰るのがよい。|適当の意。「〜するほうがよい」
+再|須|須〜|須らく〜べし|〜する必要がある|須尽歓|須らく歓を尽くすべし|歓楽を尽くす必要がある。|必要の意。「すべてのこととして」の意ではない
+再|猶・由|猶〜|猶ほ〜ごとし|(ちょうど)〜と同じだ|過猶不及|過ぎたるは猶ほ及ばざるがごとし|行き過ぎているのは及ばないのと同じだ。|A猶B＝AはBとほぼ同じ。「ごとし」の前は体言か連体形
+再|蓋・盍|盍〜|盍ぞ〜ざる|どうして〜しないのか(〜してはどうか)|盍各言爾志|盍ぞ各爾の志を言はざる|どうしてそれぞれ自分の思いを言わないのか(言ってみなさい)。|「何不〜」の二字を一字で表したもの。反語。「〜すべきだ」の意も
+願|請(自分の希望)|請〜|請ふ〜ん|どうか〜させてください(〜したい)|臣請行之|臣請ふ之を行はん|私にどうかこれを行わせてください。|自分の希望。未然形＋ん(意志)
+願|請(相手への願望)|請〜|請ふ〜せよ|どうか〜してください|請奏瑟|請ふ瑟を奏せよ|どうか瑟(弦楽器の名)を弾いてください。|相手への願望は命令形。会話文・手紙文に多い
+願|願|願〜|願はくは〜|どうか〜してください|願将軍勿疑|願はくは将軍疑ふ勿かれ|どうか将軍様、疑わないでください。|自分の希望にも相手への願望にもなる。請・願は返らずに「請ふ〜・願はくは〜」と読む
+願|庶幾|庶幾〜|庶幾はくは〜|どうか〜してください|王庶幾改之|王庶幾はくは之を改めよ|王様、どうかこれを改めてください。|庶・幾・冀・希・尚も同じ
+願|庶幾(推測)|其庶幾乎|其れ庶幾からんか|(望ましい状態に)近いだろう|斉国其庶幾乎|斉国は其れ庶幾からんか|斉の国は(望ましい状態に)近いだろう。|庶幾は本来「望ましい状態に近い」の意。「ちかシ」と読む場合もある
+願|欲|欲〜|〜んと欲す|〜したいと思う|吾欲辱之|吾之を辱めんと欲す|私はこの者に恥をかかせたいと思う。|直後が動詞→「〜んと欲す」(〜したいと思う)、名詞→「〜を欲す」(求める)。「〜しそうである」の予想も
+願|安得AB|安得A B|安くんぞAを得てBせん|なんとかしてAを得てBしたいものだ|安得猛士兮守四方|安くんぞ猛士を得て四方を守らしめん|なんとかして勇猛な武将を得て四方を守らせたいものだ。|反語ではなく希望を表す`;
+const D=RAW.split('\n').map((l,i)=>{const[c,n,f,r,m,s,k,t,o]=l.split('|');return{i,c,n,f,r,m,s,k,t,o:o||''}});
+const CN={all:'全部',否:'否定',使:'使役',受:'受身',疑:'疑問',反:'反語',詠:'詠嘆',再:'再読文字',願:'願望',練:'練習'};
+let tab='auto',cat='all',mode='f',idx=0,flip=false,deck=[],q=null,ex=null,sc=[0,0],last=-1,cur=null,curMd='f',jd={h:null,m:null};
+let LG={},plan=null,dbc=null,sync='この端末のみ（Claudeには届いていません）',wq=Promise.resolve();
+try{LG=JSON.parse(localStorage.getItem('kb-log')||'{}')}catch(e){}
+const saveLocal=()=>{try{localStorage.setItem('kb-log',JSON.stringify(LG))}catch(e){}};
+const MIG=[];
+(function(){try{if(localStorage.getItem('kb-migrated'))return;const ts=Date.now()-3*864e5;let o={};
+ try{JSON.parse(localStorage.getItem('kb-known')||'[]').forEach(i=>o[i]=[1,1])}catch(e){}
+ try{Object.assign(o,JSON.parse(localStorage.getItem('kb-known2')||'{}'))}catch(e){}
+ Object.keys(o).forEach(k=>{const i=+k;if(!D[i]||!o[k])return;const e=LG[i]=LG[i]||{h:[],m:[]};e.h=merge(e.h,[[ts,o[k][0]?1:0]]);e.m=merge(e.m,[[ts,o[k][1]?1:0]]);MIG.push(i)});
+ localStorage.setItem('kb-migrated',String(MIG.length));saveLocal()}catch(e){}})();
+const $=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const exb=d=>d.s?`<div class="ex"><div>${d.s}</div><div class="k">${d.k}</div><div>${d.t}</div></div>`:'';
+/* ---- 記録 ---- */
+function merge(a,b){const m=new Map();[...(a||[]),...(b||[])].forEach(x=>m.set(x[0]+':'+x[1],x));return [...m.values()].sort((x,y)=>x[0]-y[0]).slice(-30)}
+function rec(i,f,r){const e=LG[i]=LG[i]||{h:[],m:[]};const k=f?'m':'h';e[k]=merge(e[k],[[Date.now(),r?1:0]]);saveLocal();qWrite(i)}
+function qWrite(i){if(!dbc)return;const e=LG[i],d=D[i];wq=wq.then(()=>dbc.collection('log').doc('i'+i).set({i,n:d.n,f:d.f,c:d.c,h:e.h,m:e.m})).catch(()=>{sync='同期エラー（この端末には保存済み）';draw()})}
+function recJ(i){if(jd.h!==null)rec(i,0,jd.h);if(jd.m!==null)rec(i,1,jd.m);jd={h:null,m:null}}
+/* ---- 暗記度 ---- */
+function fpri(a){if(!a||!a.length)return 7;let w=1,s=0,t=0;a.slice(-8).reverse().forEach(x=>{s+=w*x[1];t+=w;w*=.65});const c=Math.min(1,a.length/3);let p=10*(1-s/t)*c+5*(1-c);const days=(Date.now()-a[a.length-1][0])/864e5;return Math.min(10,p+Math.min(2,days/3))}
+const att=i=>LG[i]?LG[i].h.length+LG[i].m.length:0;
+function lastTs(i){const e=LG[i];if(!e)return 0;return Math.max(0,...[...e.h,...e.m].map(x=>x[0]))}
+function lpri(i){const e=LG[i]||{h:[],m:[]};return Math.max(fpri(e.h),fpri(e.m))}
+function pri(i){const lp=lpri(i);if(plan&&plan.pri&&plan.pri[i]!=null){const p=+plan.pri[i];return lastTs(i)>(plan.at||0)?(p+lp)/2:p}return lp}
+function status(i){if(!att(i))return '未学習';const p=pri(i);return p>=6?'苦手':p>=3?'学習中':'定着'}
+const W=i=>.2+pri(i)**2/10;
+function wpick(p,exc){const c=p.filter(d=>d.i!==exc),a=c.length?c:p;let r=Math.random()*a.reduce((s,d)=>s+W(d.i),0);for(const d of a){r-=W(d.i);if(r<=0)return d}return a[a.length-1]}
+function wsample(p,n){let a=[...p],o=[];while(o.length<n&&a.length){const d=wpick(a,-1);o.push(d);a=a.filter(x=>x!==d)}return o}
+const pool=()=>D.filter(d=>(cat==='all'||d.c===cat)&&(tab!=='card'||mode!=='s'||d.s));
+function setDeck(){deck=shuf(pool());idx=0;flip=false;jd={h:null,m:null}}
+function head(){
+ $('tabs').innerHTML=[['auto','おまかせ'],['card','カード'],['quiz','4択'],['list','一覧'],['exam','総合20問']].map(([k,v])=>`<button class="${tab===k?'on':''}" onclick="tab='${k}';go()">${v}</button>`).join('');
+ $('cats').innerHTML=Object.keys(CN).map(k=>`<button class="${cat===k?'on':''}" onclick="cat='${k}';go()">${CN[k]}</button>`).join('');
+ $('cats').style.display=(tab==='auto'||tab==='exam')?'none':'';
+}
+function go(){head();setDeck();q=null;ex=null;cur=null;sc=[0,0];draw()}
+function stats(){const c={未学習:0,苦手:0,学習中:0,定着:0};D.forEach(d=>c[status(d.i)]++);return `<div class="stat"><span>定着 ${c.定着}</span><span>学習中 ${c.学習中}</span><span>苦手 ${c.苦手}</span><span>未学習 ${c.未学習}</span></div><div class="bar"><i style="width:${c.定着/D.length*100}%"></i></div><div class="tag">記録：${esc(sync)}</div>`}
+function judgeUI(){const row=(f,l)=>`<div class="judge"><b>${l}</b><button class="${jd[f]===0?'on':''}" onclick="jd.${f}=0;draw()">わからなかった</button><button class="${jd[f]===1?'on':''}" onclick="jd.${f}=1;draw()">わかった</button></div>`;return `<div class="judge"><button onclick="jd={h:1,m:1};draw()">両方わかった</button><button onclick="jd={h:0,m:0};draw()">両方わからなかった</button></div>`+row('h','書き下し')+row('m','意味')}
+function cardHTML(d,md,nextFn){
+ const front=md==='f'?`<div class="tag">構文 → 書き下し・意味</div><div class="big">${d.f}</div><div class="sub">${d.n}</div>`:`<div class="tag">例文 → 書き下し・意味</div><div class="big">${d.s}</div>`;
+ const back=md==='f'?`<div>書き下し：<span class="k">${d.r}</span></div><div>意味：${d.m}</div>${d.o?`<div class="sub">${d.o}</div>`:''}${exb(d)}`:`<div>書き下し：<span class="k">${d.k}</span></div><div>意味：${d.t}</div><div class="sub">${d.n}：${d.f}（${d.r}）</div>`;
+ return `<div class="card"><div class="tag">${status(d.i)}</div>${front}${flip?'<hr style="border:0;border-top:1px solid var(--line)">'+back+judgeUI()+`<div class="act"><button onclick="${nextFn}">記録して次へ</button></div>`:'<div class="act"><button onclick="flip=true;draw()">答えを見る</button></div>'}</div>`}
+function nextAuto(){recJ(cur.i);last=cur.i;cur=null;flip=false;draw()}
+function nextCard(){recJ(deck[idx%deck.length].i);idx++;flip=false;draw()}
+function draw(){
+ const a=$('app'),p=pool(),prog=stats();
+ if(tab==='exam'){drawExam(prog);return}
+ if(tab==='auto'){
+  if(!cur){cur=wpick(D,last);curMd=cur.s&&Math.random()<.5?'s':'f';flip=false}
+  const msg=plan&&plan.msg?`<div class="ex"><div class="tag">Claudeからのコメント${plan.at?'　'+new Date(plan.at).toLocaleDateString('ja-JP'):''}</div>${esc(plan.msg)}</div>`:'';
+  a.innerHTML=prog+msg+cardHTML(cur,curMd,'nextAuto()');return}
+ if(!p.length){a.innerHTML=prog+'<div class="card">この条件の項目はありません。別の絞り込みを選んでください。</div>';return}
+ if(tab==='list'){a.innerHTML=prog+p.map(d=>{const e=LG[d.i]||{h:[],m:[]};return `<details><summary><span class="badge">${status(d.i)}</span>${d.n}　<span class="sub">${d.m}</span></summary><div class="big" style="font-size:20px">${d.f}</div><div>書き下し：<span class="k">${d.r}</span></div>${d.o?`<div class="sub">${d.o}</div>`:''}${exb(d)}<div class="tag">書き下し ${e.h.map(x=>x[1]?'○':'×').join('')||'—'}　意味 ${e.m.map(x=>x[1]?'○':'×').join('')||'—'}</div></details>`}).join('')+`<details><summary>記録をチャットに貼る用</summary><textarea readonly onclick="this.select()">${esc(exportText())}</textarea></details>`;return}
+ if(tab==='card'){
+  if(!deck.length)setDeck();const d=deck[idx%deck.length],md=mode==='m'?((d.s&&(d.i+idx)%2)?'s':'f'):mode;
+  a.innerHTML=prog+`<div class="row"><select onchange="mode=this.value;go()"><option value="f"${mode==='f'?' selected':''}>構文を覚える</option><option value="s"${mode==='s'?' selected':''}>例文を覚える</option><option value="m"${mode==='m'?' selected':''}>構文・例文ミックス</option></select><button onclick="setDeck();draw()">シャッフル</button></div><div class="tag">${idx%deck.length+1} / ${deck.length}</div>`+cardHTML(d,md,'nextCard()');return}
+ if(!q)nextQ(p);
+ const d=q.d;
+ a.innerHTML=prog+`<div class="sub">正解 ${sc[0]} / ${sc[1]}</div><div class="card"><div class="tag">${status(d.i)}　${q.t?'この構文の意味は？':'書き下し文は？'}</div><div class="big">${q.t?d.f:d.s}</div>${q.o.map((o,j)=>`<button class="opt ${q.a!==null?(o.i===d.i?'right':j===q.a?'wrong':''):''}" ${q.a!==null?'disabled':''} onclick="pick(${j})">${q.t?o.m:o.k}</button>`).join('')}${q.a!==null?`<div class="ex"><span class="${q.o[q.a].i===d.i?'ok':'ng'}">${q.o[q.a].i===d.i?'わかった（正解）':'わからなかった（不正解）'}</span>　${d.n}：${d.f}（${d.r}）${exb(d)}</div><div class="act"><button onclick="last=q.d.i;q=null;draw()">次へ</button></div>`:''}</div>`;
+}
+function mkQ(d){const t=!d.s||Math.random()<.4;const f=x=>t?x.m:x.k;const ds=shuf(D.filter(x=>x.i!==d.i&&(t||x.s)&&f(x)!==f(d))).slice(0,3);return{d,t,o:shuf([d,...ds]),a:null}}
+function nextQ(p){q=mkQ(wpick(p,last))}
+function pick(j){q.a=j;sc[1]++;const ok=q.o[j].i===q.d.i;if(ok)sc[0]++;rec(q.d.i,q.t?1:0,ok);draw()}
+function startExam(){ex={qs:wsample(D,20).map(mkQ),i:0,sc:0,miss:[]}}
+function examPick(j){const x=ex.qs[ex.i];if(x.a!==null)return;x.a=j;const ok=x.o[j].i===x.d.i;if(ok)ex.sc++;else ex.miss.push(x.d);rec(x.d.i,x.t?1:0,ok);draw()}
+function drawExam(prog){
+ const a=$('app');if(!ex)startExam();
+ if(ex.i>=ex.qs.length){a.innerHTML=prog+`<div class="card"><div class="big">${ex.sc} / ${ex.qs.length}</div><div class="sub">苦手な項目ほど出やすい20問です。結果は記録されました。</div>${ex.miss.length?'<div style="margin-top:10px">間違えた項目</div>'+ex.miss.map(d=>`<details><summary>${d.n}　<span class="sub">${d.m}</span></summary><div>${d.f}（${d.r}）</div>${exb(d)}</details>`).join(''):'<div class="ok">全問正解です。</div>'}<div class="act"><button onclick="ex=null;draw()">もう一度（別の20問）</button></div></div>`;return}
+ const x=ex.qs[ex.i],d=x.d;
+ a.innerHTML=prog+`<div class="sub">${ex.i+1} / ${ex.qs.length}　正解 ${ex.sc}</div><div class="card"><div class="tag">${x.t?'この構文の意味は？':'書き下し文は？'}</div><div class="big">${x.t?d.f:d.s}</div>${x.o.map((o,j)=>`<button class="opt ${x.a!==null?(o.i===d.i?'right':j===x.a?'wrong':''):''}" ${x.a!==null?'disabled':''} onclick="examPick(${j})">${x.t?o.m:o.k}</button>`).join('')}${x.a!==null?`<div class="ex"><span class="${x.o[x.a].i===d.i?'ok':'ng'}">${x.o[x.a].i===d.i?'正解':'不正解'}</span>　${d.n}：${d.f}（${d.r}）${exb(d)}</div><div class="act"><button onclick="ex.i++;draw()">${ex.i+1<ex.qs.length?'次へ':'結果を見る'}</button></div>`:''}</div>`;
+}
+function exportText(){const l=[];D.forEach(d=>{const e=LG[d.i];if(e)l.push(`${d.i} ${d.n} 書:${e.h.map(x=>x[1]).join('')||'-'} 意:${e.m.map(x=>x[1]).join('')||'-'}`)});return l.length?'漢文記録(1=わかった,0=わからなかった,古→新)\n'+l.join('\n'):'まだ記録がありません'}
+/* ---- 旧「覚えた／まだ」記録の取り込み（1回だけ） ---- */
+try{if(!localStorage.getItem('kb-mig')){let o=null;try{o=JSON.parse(localStorage.getItem('kb-known2')||'null')}catch(e){}
+ if(!o){try{const a=JSON.parse(localStorage.getItem('kb-known')||'null');if(a){o={};a.forEach(i=>o[i]=[1,1])}}catch(e){}}
+ const ids=[];if(o){const t=Date.now()-3*864e5;Object.keys(o).forEach(k=>{const i=+k;if(!D[i]||!Array.isArray(o[k]))return;const e=LG[i]=LG[i]||{h:[],m:[]};if(!e.h.length&&!e.m.length){e.h=[[t,o[k][0]?1:0]];e.m=[[t,o[k][1]?1:0]];ids.push(i)}})}
+ localStorage.setItem('kb-mig','1');localStorage.setItem('kb-mig-ids',JSON.stringify(ids));saveLocal()}}catch(e){}
+go();
+(async()=>{try{if(typeof claude==='undefined')return;const db=await claude.use('db');if(!db)return;dbc=db;sync='Claudeと共有中';
+ try{const g=await db.collection('log').get();g.docs.forEach(x=>{const v=x.data();if(!v||v.i==null||!D[v.i])return;const e=LG[v.i]=LG[v.i]||{h:[],m:[]};e.h=merge(e.h,v.h);e.m=merge(e.m,v.m)});const ids=JSON.parse(localStorage.getItem('kb-mig-ids')||'[]');ids.forEach(i=>qWrite(i));if(ids.length)localStorage.setItem('kb-mig-ids','[]')}catch(e){}
+MIG.forEach(i=>qWrite(i));
+ db.collection('log').onSnapshot(s=>{s.docs.forEach(x=>{const v=x.data();if(!v||v.i==null||!D[v.i])return;const e=LG[v.i]=LG[v.i]||{h:[],m:[]};e.h=merge(e.h,v.h);e.m=merge(e.m,v.m)});saveLocal();draw()},()=>{sync='同期エラー（この端末には保存済み）';draw()});
+ db.doc('plan/now').onSnapshot(s=>{plan=s.exists?s.data():null;draw()},()=>{})}catch(e){}})();
+</script></body></html>
+
+</body></html>
